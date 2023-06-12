@@ -7,6 +7,7 @@ import AppInput from "./AppInput";
 import "./Home.css";
 
 export default function Payment({ closeModal, data, addItem }) {
+  console.log(data);
   const productTypes = [
     { key: "meals", name: "meals" },
     { key: "drinks", name: "drinks" },
@@ -17,7 +18,7 @@ export default function Payment({ closeModal, data, addItem }) {
       name: "name",
       label: "Product Name",
       required: true,
-      value: data && data.name,
+      value: data.name || 'dffdfd',
       width: 6,
     },
     {

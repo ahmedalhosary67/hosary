@@ -22,7 +22,8 @@ export default function Home() {
   const print = () => {
     console.log("ok");
   };
-  const openModel = () => {
+  const openModel = (type) => {
+    type =="Add" && setItemData()
     setShow(true);
   };
 
@@ -78,7 +79,7 @@ export default function Home() {
                   Category
                 </th>
                 <th scope="col">
-                  <button className="btn" onClick={openModel}>
+                  <button className="btn" onClick={()=>openModel("Add")}>
                     <FaPlusSquare /> Add Item
                   </button>
                 </th>

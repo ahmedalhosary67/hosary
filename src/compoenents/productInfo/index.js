@@ -28,7 +28,7 @@ const ProductInfo = ({ type, editFunc, deleteFunc }) => {
               <td className="tg-0lax">{item.quantities}</td>
               <td className="tg-0lax">
                 <Space wrap>
-                  {/* <Button onClick={() => editFunc(item)}>Edit</Button> */}
+                  <Button onClick={() => editFunc(item)}>Edit</Button>
                   <Button onClick={() => deleteFunc(item)}>Delete</Button>
                 </Space>
               </td>
