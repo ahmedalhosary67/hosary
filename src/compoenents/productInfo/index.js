@@ -1,73 +1,41 @@
 import React from "react";
 
+import { Button, Dropdown, Space, message } from "antd";
+import { FaEdit, FaTimesCircle } from "react-icons/fa";
 import "./main.css";
 
-import { Button, Dropdown, Space, message } from "antd";
-// import { DownOutlined, UserOutlined } from "icons";
-
-
-import { FaEdit } from 'react-icons/fa';
-import { FaTimesCircle } from 'react-icons/fa';
-
-// const { DownOutlined, UserOutlined } = icons;
-// const { Button, Dropdown, Space, message } = antd;
-const handleMenuClick = (e) => {
-  message.info('Click on menu item.');
-  console.log('click', e);
-};
-const items = [
-  {
-    label: 'edit',
-    key: '1',
-  },
-  {
-    label: 'delete',
-    key: '2',
-  },
-
-];
-const menuProps = {
-  items,
-  onClick: handleMenuClick,
-};
-
-
-
-const ProductInfo = ({ item, editFunc, deleteFunc }) => {
+const ProductInfo = ({ type, editFunc, deleteFunc }) => {
   return (
     <>
-      <span className="task-box dropright">
-      
-          <table className="table table-bordered table-striped">
-            <thead>
-              <tr>
-                <th class="tg-0lax"> Name</th>
-                <th class="tg-0lax"> Price</th>
-                <th class="tg-0lax"> Quantity</th>
-                <th class="tg-0lax"> <FaEdit/>  <FaTimesCircle/></th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td class="tg-0lax">{item.name}</td>
-                <td class="tg-0lax">{item.price} OMR</td>
-                <td class="tg-0lax">{item.quantities}</td>
-                <td class="tg-0lax">  <Space wrap>
-                  <Dropdown menu={menuProps}>
-                    <Button>
-                      <Space>
-                        change
-                      </Space>
-                    </Button>
-                  </Dropdown>
+      <table className="table table-bordered table-striped">
+        {type.length >= 1 && (
+          <thead>
+            <tr>
+              <th className="tg-0lax"> Name</th>
+              <th className="tg-0lax"> Price</th>
+              <th className="tg-0lax"> Quantity</th>
+              <th className="tg-0lax">
+                <FaEdit /> <FaTimesCircle />
+              </th>
+            </tr>
+          </thead>
+        )}
+        {type.map((item) => (
+          <tbody key={item.id}>
+            <tr>
+              <td className="tg-0lax">{item.name}</td>
+              <td className="tg-0lax">{item.price} OMR</td>
+              <td className="tg-0lax">{item.quantities}</td>
+              <td className="tg-0lax">
+                <Space wrap>
+                  {/* <Button onClick={() => editFunc(item)}>Edit</Button> */}
+                  <Button onClick={() => deleteFunc(item)}>Delete</Button>
                 </Space>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-      
-        <br />
-      </span>
+              </td>
+            </tr>
+          </tbody>
+        ))}
+      </table>
     </>
   );
 };

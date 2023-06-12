@@ -4,22 +4,15 @@ import "./main.css";
 import { Form, Input } from "antd";
 import { useState } from "react";
 
-const AppInput = ({ name, label, textArea, required, type, addonBefore }) => {
-  const [num, setNum] = useState(0);
+const AppInput = ({ name, label, required, type, value }) => {
   const handleNumber = (i) => {
-    console.log(i.target.value.toLocaleString());
-    const commas = i.target.value.toLocaleString();
-    type === "number" && setNum(commas);
+    console.log(i.target);
   };
-  useEffect(() => {
-    console.log(num);
-  }, [num]);
   return (
     <>
       <Form.Item
         name={name}
         label={label}
-      
         rules={[
           {
             required: required,
@@ -29,9 +22,9 @@ const AppInput = ({ name, label, textArea, required, type, addonBefore }) => {
         <Input
           type={type}
           onChange={handleNumber}
-          value={num}
-          min = {0}
-          addonBefore={addonBefore}
+          // defaultValue={value}
+          value={value}
+          min={0}
         />
       </Form.Item>
     </>

@@ -6,6 +6,7 @@ const { Option } = Select;
 
 const AppSelect = ({ onChange, name, label, data, value, required }) => {
   const placeHolder = "Select";
+  console.log(value);
   return (
     <>
       <Form.Item
@@ -21,7 +22,8 @@ const AppSelect = ({ onChange, name, label, data, value, required }) => {
           placeholder={placeHolder}
           onChange={onChange}
           value={value}
-          allowClear
+          // defaultValue={value}
+          // allowClear
         >
           {data.map((item) => (
             <Option key={item.key || item.id} value={item.key}>
