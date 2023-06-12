@@ -19,6 +19,7 @@ const AppInput = ({ name, label, textArea, required, type, addonBefore }) => {
       <Form.Item
         name={name}
         label={label}
+      
         rules={[
           {
             required: required,
@@ -29,6 +30,7 @@ const AppInput = ({ name, label, textArea, required, type, addonBefore }) => {
           type={type}
           onChange={handleNumber}
           value={num}
+          min = {0}
           addonBefore={addonBefore}
         />
       </Form.Item>

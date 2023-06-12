@@ -2,6 +2,11 @@ import "./Home.css";
 import React from "react";
 
 import Payment from "./Payment.js";
+import { FaPrint  } from 'react-icons/fa';
+import {FaRegHeart  } from 'react-icons/fa';
+import {FaPlusSquare  } from 'react-icons/fa';
+import {FaDollarSign  } from 'react-icons/fa';
+
 
 import "./Homeapp.js";
 import ProductInfo from "./productInfo";
@@ -13,6 +18,9 @@ export default function Home() {
   const [drinks, setDrinks] = React.useState([]);
   const [clothes, setClothes] = React.useState([]);
 
+  const print = () => {
+    console.log("ok");
+  }
   const openModel = () => {
     setShow(true);
   };
@@ -22,9 +30,9 @@ export default function Home() {
   };
   function addItem(formData) {
     console.log(formData.type);
-    formData.type == "meals"
+    formData.type === "meals"
       ? meals.push(formData)
-      : formData.type == "drinks"
+      : formData.type === "drinks"
       ? drinks.push(formData)
       : clothes.push(formData);
   }
@@ -39,15 +47,23 @@ export default function Home() {
     // t.parentNode.removeChild(t);
   }
 
+  function deleteFunc(item) {
+    console.log("delete");
+
+  
+}
+
+
   return (
     <>
       <div className="collect-parts col-12 col-sm-10 col-lg-10 col-xl-8">
         <section className="explain">
+        <br/> <br/>
           <div className="welcome">
-            <h1>Welcome!</h1>
+            <h1>Welcome  <FaRegHeart/> </h1>
           </div>
           <div className="usage">
-            <p>Use this table to organize your cabinet</p>
+            <p>Use this table to add product and print payment </p>
           </div>
         </section>
         <section className="cat-table">
@@ -59,14 +75,14 @@ export default function Home() {
                 </th>
                 <th scope="col">
                   <button className="btn" onClick={openModel}>
-                    + Item
+                    <FaPlusSquare/> Add Item
                   </button>
                 </th>
               </tr>
             </thead>
             <tbody>
               <tr id="meals">
-                <th scope="row">Meals</th>
+                <th scope="row">Meals <FaPrint  onClick={print} /> </th>
                 <td>
                   <div className="meals">
                     {meals.map((item) => (
@@ -76,7 +92,7 @@ export default function Home() {
                 </td>
               </tr>
               <tr id="drinks">
-                <th scope="row">Drinks</th>
+                <th scope="row">Drinks <FaPrint onClick={print}/></th>
                 <td>
                   <div className="drinks">
                     {drinks.map((item) => (
@@ -86,7 +102,7 @@ export default function Home() {
                 </td>
               </tr>
               <tr id="clothes">
-                <th scope="row">Clothes</th>
+                <th scope="row">Clothes  <FaPrint onClick={print} /></th>
                 <td>
                   <div className="clothes">
                     {clothes.map((item) => (
@@ -95,6 +111,17 @@ export default function Home() {
                   </div>
                 </td>
               </tr>
+
+              <tr id="total ">
+                <th scope="row">Total  price <FaDollarSign/> </th>
+                <td>
+                  <div className="total">
+                  
+
+                  </div>
+                </td>
+              </tr>
+
             </tbody>
           </table>
         </section>
@@ -106,7 +133,7 @@ export default function Home() {
             data-target="#exampleModal"
             // onclick="takeshot()"
           >
-            Print
+            Print all payment
           </button>
         </section>
       </div>

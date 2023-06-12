@@ -13,7 +13,7 @@ const AppSelect = ({ onChange, name, label, data, value, required }) => {
         label={label}
         rules={[
           {
-            required: false,
+            required: true,
           },
         ]}
       >

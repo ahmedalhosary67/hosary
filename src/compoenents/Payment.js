@@ -2,6 +2,8 @@ import React from "react";
 import "./Home.css";
 import { Button, Form } from "antd";
 import AppSelect from "./AppSelect";
+import { FaTimesCircle  } from 'react-icons/fa';
+
 // import './Homeapp.js';
 // import "antd/dist/antd.css";
 import { Col, Row } from "react-bootstrap";
@@ -52,7 +54,7 @@ export default function Payment({ closeModal,data, setData, addItem }) {
                       <div className="adding row">
                         <div className="add col-6">Add Item</div>
                         <div className="close col-6" onClick={closeModal}>
-                          ×
+                        <FaTimesCircle/>
                         </div>
                       </div>
                       <Form
