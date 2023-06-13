@@ -21,9 +21,7 @@ const AppSelect = ({ onChange, name, label, data, value, required }) => {
         <Select
           placeholder={placeHolder}
           onChange={onChange}
-          value={value}
-          // defaultValue={value}
-          // allowClear
+          allowClear
         >
           {data.map((item) => (
             <Option key={item.key || item.id} value={item.key}>

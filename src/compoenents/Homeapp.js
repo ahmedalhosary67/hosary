@@ -152,3 +152,141 @@
 //   let t = elem.parentNode.parentNode;
 //   t.parentNode.removeChild(t);
 // }
+
+
+import React, { useState } from "https://cdn.skypack.dev/react@17.0.1";
+import ReactDOM from "https://cdn.skypack.dev/react-dom@17.0.1";
+
+const AppXX = () => {
+  const checklists = [
+    "Dance",
+    "Music",
+    "Movie",
+    "Travelling",
+    "Writing",
+    "Cooking",
+    "Drawing",
+    "Singing",
+  ];
+
+  const [checkedModelList, setCheckedModelList] = useState([]);
+
+  const onChangeModel = (e) => {
+    const ischecked = e.target.checked;
+    const dataid = e.target.dataset.id;
+    if (dataid === "checkall") {
+      if (ischecked === true) {
+        setCheckedModelList(checklists);
+      } else {
+        setCheckedModelList([]);
+      }
+    } else {
+      if (ischecked === true) {
+        setCheckedModelList((prevalue) => [...prevalue, dataid]);
+      } else {
+        const resultfilter = checkedModelList.filter((d, index) => {
+          return d !== dataid;
+        });
+        setCheckedModelList(resultfilter);
+      }
+    }
+  };
+
+  // Checkbox Checkedinput lists array
+  console.log(checkedModelList);
+
+  const formSubmitEvent = (e) => {
+    e.preventDefault();
+
+    // Result On Submit Click
+    // console.log(checkedModelList);
+  };
+
+  return (
+    <React.Fragment>
+      <div className="row m-0 justify-content-center">
+        <div className="col-md-4 mt-5 mb-5">
+          <div className="form-area">
+            <div className="form-inner">
+              <form onSubmit={formSubmitEvent}>
+                <h4 className="form-heading mb-4 text-primary text-center">
+                  React Check / Uncheck All Checkbox
+                </h4>
+                <div className="row">
+                  <div className="col-lg-12">
+                    <div class="alert alert-warning" role="alert">
+                      You can see result in console
+                    </div>
+                  </div>
+                </div>
+                <div className="row">
+                  <div className="col-lg-6">
+                    <div className="form-group mb-0">
+                      <label className="d-block">Hobbies</label>
+                      <div className="custom-control custom-checkbox d-inline-block mr-2">
+                        <input
+                          type="checkbox"
+                          className="custom-control-input checkbox-input"
+                          data-id="checkall"
+                          id="checkall"
+                          value="checkall"
+                          onChange={onChangeModel}
+                          checked={
+                            checkedModelList.length === checklists.length
+                          }
+                        />
+                        <label
+                          className="custom-control-label"
+                          htmlFor="checkall"
+                        >
+                          Check All Hobbies
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <hr />
+                <div className="row">
+                  {checklists.map((dvalue, index) => {
+                    return (
+                      <div className="col-lg-4">
+                        <div className="form-group">
+                          <div className="custom-control custom-checkbox d-inline-block mr-2">
+                            <input
+                              type="checkbox"
+                              className="custom-control-input checkbox-input"
+                              data-id={dvalue}
+                              id={dvalue}
+                              value={dvalue}
+                              onChange={onChangeModel}
+                              checked={checkedModelList.includes(dvalue)}
+                            />
+                            <label
+                              className="custom-control-label"
+                              htmlFor={dvalue}
+                            >
+                              {dvalue}
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+                <div className="col-lg-12 text-right">
+                  <button type="submit" className="btn btn-primary form-submit">
+                    Submit
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </React.Fragment>
+  );
+};
+
+
+export default AppXX
+// ReactDOM.render(<App />, document.getElementById("root"));

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Button, Form } from "antd";
 import AppSelect from "./AppSelect";
 import { FaTimesCircle } from "react-icons/fa";
@@ -6,8 +6,11 @@ import { Col, Row } from "react-bootstrap";
 import AppInput from "./AppInput";
 import "./Home.css";
 
-export default function Payment({ closeModal, data, addItem }) {
-  console.log(data);
+export default function Payment({ closeModal, data, addItem, totalAllPrice, editItem }) {
+  const [form] = Form.useForm()
+  useEffect(() => {
+    data && form.setFieldsValue(data)
+  }, [])
   const productTypes = [
     { key: "meals", name: "meals" },
     { key: "drinks", name: "drinks" },
@@ -18,7 +21,6 @@ export default function Payment({ closeModal, data, addItem }) {
       name: "name",
       label: "Product Name",
       required: true,
-      value: data.name || 'dffdfd',
       width: 6,
     },
     {
@@ -26,7 +28,6 @@ export default function Payment({ closeModal, data, addItem }) {
       label: "Price - OMR",
       type: "number",
       required: true,
-      value: data && data.price,
       width: 3,
     },
     {
@@ -34,13 +35,18 @@ export default function Payment({ closeModal, data, addItem }) {
       label: "Quantities",
       type: "number",
       required: true,
-      value: data && data.quantities,
       width: 3,
     },
   ];
   function onFinish(values) {
-    values.id = Math.floor(Math.random() * 1000000);
-    addItem(values);
+    if (!data) {
+      values.id = Math.floor(Math.random() * 1000000);
+      addItem(values);
+    }else{
+      values.id = data.id
+      editItem(values)
+    }
+
     closeModal();
   }
   return (
@@ -60,6 +66,7 @@ export default function Payment({ closeModal, data, addItem }) {
                         </div>
                       </div>
                       <Form
+                        form={form}
                         layout="vertical"
                         name="control-ref"
                         onFinish={onFinish}
@@ -72,7 +79,6 @@ export default function Payment({ closeModal, data, addItem }) {
                                 label={x.label}
                                 type={x.type}
                                 required={x.required}
-                                value={x.value}
                               />
                             </Col>
                           ))}
@@ -81,10 +87,13 @@ export default function Payment({ closeModal, data, addItem }) {
                           name="type"
                           label="type"
                           data={productTypes}
-                          value={data && data.type}
                         />
                         <Form.Item>
-                          <Button type="primary" htmlType="submit">
+                          <Button
+                            type="primary"
+                            htmlType="submit"
+                          // onClick={totalAllPrice}
+                          >
                             Add to payment
                           </Button>
                         </Form.Item>

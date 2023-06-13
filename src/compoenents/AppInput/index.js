@@ -4,9 +4,8 @@ import "./main.css";
 import { Form, Input } from "antd";
 import { useState } from "react";
 
-const AppInput = ({ name, label, required, type, value }) => {
+const AppInput = ({ name, label, required, type, value, item }) => {
   const handleNumber = (i) => {
-    console.log(i.target);
   };
   return (
     <>
@@ -22,8 +21,6 @@ const AppInput = ({ name, label, required, type, value }) => {
         <Input
           type={type}
           onChange={handleNumber}
-          // defaultValue={value}
-          value={value}
           min={0}
         />
       </Form.Item>
