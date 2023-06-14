@@ -20,31 +20,11 @@ import { useReactToPrint } from "react-to-print";
 // }
 
 export default function Home() {
+  const tableRef = useRef();
+  const [messageApi, contextHolder] = message.useMessage();
   const [show, setShow] = React.useState(false);
   const [itemData, setItemData] = React.useState();
-  // const [meals, setMeals] = React.useState([]);
-  // const [drinks, setDrinks] = React.useState([]);
-  // const [clothes, setClothes] = React.useState([]);
   const [categories, setCategories] = React.useState([]);
-  function totalMeals(arr = []) {
-    let sum = 0;
-    for (let i = 0; i < arr.length; i++) {
-      console.log(arr[i]);
-      sum += (Number(arr[i].price) * Number(arr[i].quantities));
-    }
-    return sum;
-  }
-
-  function totalAllPrice() {
-    let sum = 0;
-    sum += totalMeals(categories);
-    // sum += totalMeals(meals) + totalMeals(drinks) + totalMeals(clothes);
-    console.log(sum);
-    return sum;
-  }
-  let totalPrice = totalAllPrice();
-  //  totalMeals()
-
   //-----Mohamed elsayed-----//
   const [selection, setSelection] = useState({
     all: false,
@@ -53,8 +33,22 @@ export default function Home() {
     clothes: false,
   });
 
-  const tableRef = useRef();
-  const [messageApi, contextHolder] = message.useMessage();
+  function totalMeals(arr = []) {
+    let sum = 0;
+    const trueArr = arr.filter((item) => selection[item.type]);
+    for (let i = 0; i < trueArr.length; i++) {
+      sum += Number(trueArr[i].price) * Number(trueArr[i].quantities);
+    }
+    return sum;
+  }
+
+  function totalAllPrice() {
+    let sum = 0;
+    sum += totalMeals(categories);
+    return sum;
+  }
+  let totalPrice = totalAllPrice();
+  //  totalMeals()
 
   const print = useReactToPrint({
     content: () => tableRef.current,
@@ -73,15 +67,14 @@ export default function Home() {
   };
 
   function addItem(formData) {
-    categories.push(formData)
+    categories.push(formData);
   }
 
   function editItem(formData) {
-    const index = categories.findIndex((ele) => ele.id === itemData.id)
-    categories[index] = formData
-    setCategories(categories)
+    const index = categories.findIndex((ele) => ele.id === itemData.id);
+    categories[index] = formData;
+    setCategories(categories);
   }
-  
 
   function editFunc(item) {
     setItemData(item);
@@ -91,12 +84,18 @@ export default function Home() {
   //mohamed elsayed//
   function checkAll(e) {
     setSelection((prev) => {
-      return { ...prev, all: !prev.all };
+      return {
+        all: !prev.all,
+        meals: !prev.all,
+        drinks: !prev.all,
+        clothes: !prev.all,
+      };
     });
+    // totalAllPrice()
   }
 
   function deleteFunc(item) {
-    setCategories(categories.filter((el) => el.id != item.id))
+    setCategories(categories.filter((el) => el.id != item.id));
   }
 
   useEffect(() => {
@@ -147,12 +146,10 @@ export default function Home() {
               <tr
                 id="meals"
                 // mohamed elsayed
-                className={
-                  selection.all ? "" : selection.meals ? "" : "no-print"
-                }
+                className={selection.meals ? "" : "no-print"}
               >
                 <th scope="row">
-                  Meals <FaPrint onClick={print} />{" "}
+                  Meals <FaPrint onClick={print} />
                 </th>
                 <td>
                   <div className="meals">
@@ -171,21 +168,24 @@ export default function Home() {
                     // mohamed elsayed
                     onChange={() =>
                       setSelection((prev) => {
+                        if (prev.all) {
+                          return {
+                            ...prev,
+                            meals: !prev.meals,
+                            all: !prev.all,
+                          };
+                        }
                         return { ...prev, meals: !prev.meals };
                       })
                     }
-                    checked={
-                      selection.all ? true : selection.meals ? true : false
-                    }
+                    checked={selection.meals}
                   />
                 </td>
               </tr>
               <tr
                 id="drinks"
                 // mohamed elsayed
-                className={
-                  selection.all ? "" : selection.drinks ? "" : "no-print"
-                }
+                className={selection.drinks ? "" : "no-print"}
               >
                 <th scope="row">
                   Drinks <FaPrint onClick={print} />
@@ -208,21 +208,24 @@ export default function Home() {
                     // mohamed elsayed
                     onChange={() =>
                       setSelection((prev) => {
+                        if (prev.all) {
+                          return {
+                            ...prev,
+                            drinks: !prev.drinks,
+                            all: !prev.all,
+                          };
+                        }
                         return { ...prev, drinks: !prev.drinks };
                       })
                     }
-                    checked={
-                      selection.all ? true : selection.drinks ? true : false
-                    }
+                    checked={selection.drinks}
                   />
                 </td>
               </tr>
               <tr
                 id="clothes"
                 // mohamed elsayed
-                className={
-                  selection.all ? "" : selection.clothes ? "" : "no-print"
-                }
+                className={selection.clothes ? "" : "no-print"}
               >
                 <th scope="row">
                   Clothes <FaPrint onClick={print} />
@@ -244,12 +247,17 @@ export default function Home() {
                     // mohamed elsayed
                     onChange={() =>
                       setSelection((prev) => {
+                        if (prev.all) {
+                          return {
+                            ...prev,
+                            clothes: !prev.clothes,
+                            all: !prev.all,
+                          };
+                        }
                         return { ...prev, clothes: !prev.clothes };
                       })
                     }
-                    checked={
-                      selection.all ? true : selection.clothes ? true : false
-                    }
+                    checked={selection.clothes}
                   />
                 </td>
               </tr>

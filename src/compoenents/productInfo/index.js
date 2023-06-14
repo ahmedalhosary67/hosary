@@ -5,7 +5,6 @@ import { FaEdit, FaTimesCircle } from "react-icons/fa";
 import "./main.css";
 
 const ProductInfo = ({ type, editFunc, deleteFunc, categories }) => {
-  // console.log(type);
   const category = categories.filter((item) => item.type === type);
   return (
     <>
